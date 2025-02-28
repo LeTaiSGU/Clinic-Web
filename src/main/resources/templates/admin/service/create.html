@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/index}">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm Dịch Vụ</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="card">
+
+        <div class="card-header">
+            <h3 class="card-title">THÊM DỊCH VỤ</h3>
+        </div>
+        <div class="mx-4 mt-2">
+            <a href="/admin/services"><i class="fa-solid fa-chevron-left"></i><span class="p-2">Quay lại</span></a>
+        </div>
+        <div class="card-body px-4 pt-1 pb-4">
+            <div class="box">
+                <div class="box-body m-auto w-50">
+                    <div th:if="${errorMessage}" class="error">
+                        <p th:text="${errorMessage}"></p>
+                    </div>
+                    <form class="p-4 shadow-lg rounded" th:action="@{/admin/services/create}" th:object="${service}" method="post">
+                        <!-- Service Name -->
+                        <div class="mb-3">
+                            <label for="serviceName" class="form-label">Tên Dịch Vụ</label>
+                            <input type="text" class="form-control" id="serviceName" th:field="*{serviceName}" placeholder="Nhập tên dịch vụ">
+                            <div th:if="${#fields.hasErrors('serviceName')}" class="text-danger">
+                                <span th:errors="*{serviceName}"></span>
+                            </div>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Mô Tả</label>
+                            <textarea class="form-control" id="description" th:field="*{description}" placeholder="Nhập mô tả dịch vụ"></textarea>
+                            <div th:if="${#fields.hasErrors('description')}" class="text-danger">
+                                <span th:errors="*{description}"></span>
+                            </div>
+                        </div>
+
+                        <!-- Price -->
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Giá</label>
+                            <input type="number" class="form-control" id="price" th:field="*{price}" placeholder="Nhập giá" step="10000.00" min="0">
+                            <div th:if="${#fields.hasErrors('price')}" class="text-danger">
+                                <span th:errors="*{price}"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 text-right">
+                            <button type="submit" class="btn btn-primary">Tạo mới</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Minie Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=tune" />
+    <th:block th:replace="layout :: link-css"></th:block>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700,900&display=swap');
+
+        body{
+            background: #ecf0f4;
+            width: 100%;
+            height: 100%;
+            font-size: 18px;
+            line-height: 1.5;
+            font-family: 'Roboto', sans-serif;
+            color: #222;
+        }
+        .container{
+            position: relative;
+            max-width: 1230px;
+            width: 100%;
+        }
+
+        h1{
+            font-weight: 700;
+            font-size: 45px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .header{
+            margin-bottom: 80px;
+        }
+        #description{
+            font-size: 24px;
+        }
+
+        .form-wrap{
+            background: rgba(255,255,255,1);
+            width: 100%;
+            max-width: 850px;
+            padding: 50px;
+            margin: 0 auto;
+            position: relative;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+        }
+        .form-wrap:before{
+            content: "";
+            width: 90%;
+            height: calc(100% + 60px);
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            position: absolute;
+            top: -30px;
+            background: #00bcd9;
+            z-index: -1;
+            opacity: 0.8;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+        }
+        .form-group{
+            margin-bottom: 25px;
+        }
+        .form-group > label{
+            display: block;
+            font-size: 18px;
+            color: #000;
+        }
+        .custom-control-label{
+            color: #000;
+            font-size: 16px;
+        }
+        .form-control{
+            height: 50px;
+            background: #ecf0f4;
+            border-color: transparent;
+            padding: 0 15px;
+            font-size: 16px;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+        .form-control:focus{
+            border-color: #00bcd9;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
+        textarea.form-control{
+            height: 160px;
+            padding-top: 15px;
+            resize: none;
+        }
+
+        .btn{
+            padding: .657rem .75rem;
+            font-size: 18px;
+            letter-spacing: 0.050em;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #00bcd9;
+            border-color: #00bcd9;
+        }
+
+        .btn-primary:hover {
+            color: #00bcd9;
+            background-color: #ffffff;
+            border-color: #00bcd9;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
+
+        .btn-primary:focus, .btn-primary.focus {
+            color: #00bcd9;
+            background-color: #ffffff;
+            border-color: #00bcd9;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
+
+        .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
+        .show > .btn-primary.dropdown-toggle {
+            color: #00bcd9;
+            background-color: #ffffff;
+            border-color: #00bcd9;
+        }
+
+        .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
+        .show > .btn-primary.dropdown-toggle:focus {
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
+
+        #errorMessage {
+            position: absolute; /* Nổi lên trên, không ảnh hưởng layout */
+            top: 10px; /* Khoảng cách từ phía trên */
+            right: 20px; /* Khoảng cách từ phía phải */
+            z-index: 1000; /* Đảm bảo nó nổi trên các thành phần khác */
+            padding: 15px;
+            border: 1px solid red;
+            border-radius: 5px;
+            background-color: #f8d7da; /* Màu nền cảnh báo */
+            color: #721c24; /* Màu chữ cảnh báo */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Tạo bóng cho đẹp */
+
+            opacity: 0;
+            transform: translateY(-20px); /* Trượt lên trên */
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        #errorMessage.show {
+            opacity: 1; /* Hiện lên */
+            transform: translateY(0); /* Về vị trí ban đầu */
+        }
+
+        #errorMessage.hide {
+            opacity: 0; /* Mờ dần */
+            transform: translateY(-20px); /* Trượt lên khi ẩn */
+        }
+    </style>
+</head>
+<body>
+<th:block th:replace="layout :: header"></th:block>
+<div class="container mt-5">
+    <div class="row p-4">
+        <div class="col-1 col-md-3">
+            <div class="bg-white shadow-sm rounded-2 ">
+                <ul class="nav flex-column pt-3 pb-3">
+                    <li class="p-3">
+                        <a th:href="@{/information/appointment}" class="link-underline link-underline-opacity-0 text-dark w-100 item-active d-block w-100">Lịch khám</a>
+                    </li>
+                    <li class="p-3">
+                        <a th:href="@{/information/history/{patientId}(patientId=${user.patient.id})}" class="link-underline link-underline-opacity-0 text-dark d-block w-100">Lịch sử thanh toán</a>
+                    </li>
+                    <li class="p-3">
+                        <a th:href="@{/information/userProfile/{patientId}(patientId=${user.patient.id})}" class="link-underline link-underline-opacity-0 text-dark d-block w-100">Hồ sơ</a>
+                    </li>
+                    <li class="p-3" >
+                        <a th:href="@{/information/account/{patientId}(patientId=${user.patient.id})}" class="link-underline link-underline-opacity-0 text-dark d-block w-100">Tài khoản</a>
+                    </li>
+                    <li class="p-3">
+                        <a href="/logout" class="link-underline link-underline-opacity-0 text-dark d-block w-100">Đăng xuất</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-span-9 col-md-9">
+            <div class="d-flex items-center ">
+                <div class="container">
+                    <div th:if="${errorMessage}" id="errorMessage" class="alert alert-danger">
+                        [[${errorMessage}]]
+                    </div>
+                    <div class="form-wrap">
+                        <div class="d-flex p-3 items-center gap-5 flex-row">
+
+                            <div style="width: 64px; height: 64px; border-radius: 50%"
+                                 class="d-flex bg-info bg-gradient justify-content-center align-items-center">
+                                <div class="absolute text-white fw-bold fs-4">
+                                    <th:block th:text="${#strings.substring(patient.fullName, 0, 2).toUpperCase()}">TO</th:block>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 th:text="${patient.fullName}">Đức Toàn</h3>
+                                <p th:text="${'Mã bệnh nhân: ' + patient.id}">Mã bệnh nhân</p>
+                            </div>
+
+                        </div>
+                        <form id="survey-form"
+                              th:action="@{/information/userProfile/update}"
+                              th:object="${patient}"
+                              method="post">
+                            <!-- Hidden input để giữ ID -->
+                            <input type="hidden" th:field="*{id}">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label id="name-label" for="fullName">Họ và tên</label>
+                                        <input type="text"
+                                               name="fullName"
+                                               id="fullName"
+                                               placeholder="Nhập đầy đủ họ tên"
+                                               class="form-control"
+                                               th:field="*{fullName}"
+                                               required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label id="number-label" for="dob">Ngày sinh</label>
+                                        <input type="date"
+                                               id="dob"
+                                               name="dob"
+                                               class="form-control"
+                                               th:value="${#temporals.format(patient.dob, 'yyyy-MM-dd')}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="address">Địa chỉ</label>
+                                        <input type="text"
+                                               name="address"
+                                               id="address"
+                                               placeholder="Nhập địa chỉ của bạn"
+                                               class="form-control"
+                                               th:field="*{address}"
+                                               required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label id="email-label" for="email">Email</label>
+                                        <input type="email"
+                                               name="email"
+                                               id="email"
+                                               placeholder="Nhập email của bạn"
+                                               class="form-control"
+                                               th:field="*{email}"
+                                               required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="phone">Số điện thoại</label>
+                                        <input type="text"
+                                               name="phone"
+                                               id="phone"
+                                               placeholder="Nhập số điện thoại"
+                                               class="form-control"
+                                               th:field="*{phone}"
+                                               required>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="p-3 d-flex justify-content-end gap-6" style="margin: 0 40px">
+                                <button type="submit" class="btn btn-primary">Thay đổi thông tin</button>
+                                <a th:href="@{/information/userProfile/{patientId}(patientId=${patient.id})}"
+                                   class="btn btn-secondary">Hủy</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:replace="layout :: footer"></th:block>
+<th:block th:replace="layout :: script"></th:block>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const errorMessageDiv = document.getElementById("errorMessage");
+        if (errorMessageDiv) {
+            // Thêm class "show" để kích hoạt hiệu ứng hiện
+            errorMessageDiv.classList.add("show");
+
+            // Sau 2 giây, thêm class "hide" để kích hoạt hiệu ứng ẩn
+            setTimeout(() => {
+                errorMessageDiv.classList.add("hide");
+                // Sau khi ẩn hoàn toàn, xóa nó khỏi DOM
+                setTimeout(() => {
+                    errorMessageDiv.style.display = "none";
+                }, 500); // Thời gian trùng với "transition" trong CSS
+            }, 2000);
+        }
+    });
+</script>
+</body>
+
+</html>
+

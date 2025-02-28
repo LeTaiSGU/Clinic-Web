@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Khôi phục mật khẩu</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const resetForm = document.getElementById("resetPass");
+
+        resetForm.addEventListener("submit", function(event) {
+            const newPass = document.getElementById("floatingInput1").value;
+            const confirmPass = document.getElementById("floatingInput2").value;
+
+            if (newPass !== confirmPass) {
+                event.preventDefault(); // Ngừng gửi form
+                const toastMessage = "Mật khẩu xác nhận không khớp."; // Lỗi
+
+                const errorToastElement = document.getElementById('errorToast');
+                const errorMessageElement = document.getElementById('errorMessage');
+
+                if (errorToastElement && errorMessageElement) {
+                    errorMessageElement.textContent = toastMessage; // Thay đổi nội dung thông báo
+                    errorToastElement.style.display = 'block'; // Hiển thị toast
+                    const toast = new bootstrap.Toast(errorToastElement, { delay: 5000 });
+                    toast.show(); // Hiển thị thông báo lỗi
+                }
+            }
+        });
+    });
+</script>
+
+<nav class="d-flex p-2" style="background-color:#FFFFFF">
+    <img class="logo me-auto" th:src="@{/images/logo.png}" style="height: 40px; width: auto;" alt="Logo">
+    <a th:href="@{/login}" class="btn btn-outline-primary ms-auto">Đăng nhập</a>
+</nav>
+
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 11; width: 100%;">
+    <div
+            class="toast align-items-center text-white bg-danger border-0"
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true"
+            id="errorToast" style="display: none;">
+        <div class="d-flex">
+            <div class="toast-body">
+                <p id="errorMessage"></p>
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="row border rounded-5 p-3 bg-white shadow box-area">
+        <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box" style="background:#103cbe;">
+            <div class="feature-image mb-3">
+                <img th:src="@{/images/2250207.png}" class="img-fluid" style="width: 250px" alt="Feature">
+            </div>
+            <p class="text-white fs-2" style="font-family: 'Courier New', Courier, monospace; font-weight: 700">Be verified</p>
+            <small class="text-white text-wrap text-center" style="width: 17rem;font-family:'Courier New', Courier, monospace;">Join with Us</small>
+        </div>
+        <div class="col-md-6 right-box">
+            <div class="row align-items-center">
+                <div class="header-text mb-4">
+                    <p>Xin chào</p>
+                    <p>Vui lòng không cung cấp mật khẩu cho bất kì ai</p>
+                    <form id="resetPass" th:action="@{/resetPass}" method="post">
+                        <input type="text" name="token" th:value="${token}">
+
+                        <div class="form-floating mb-3">
+                            <input type="password" name="newPass" class="form-control" id="floatingInput1" required>
+                            <label for="floatingInput1">New Password</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" name="conFirmPass" class="form-control" id="floatingInput2" required>
+                            <label for="floatingInput2">Confirm Password</label>
+                        </div>
+                        <div class="input-group mb-3">
+                            <button type="submit" class="btn btn-lg btn-primary w-100 fs-6">Xác nhận</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<footer class="d-flex flex-column align-items-center">
+    <p>
+        Các thông tin chỉ dành cho mục đích tham khảo, tra cứu và không thay thế cho việc chẩn đoán hoặc điều trị y khoa.
+    </p>
+</footer>
+</html>

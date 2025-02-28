@@ -1,0 +1,156 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="vi" xmlns:th="http://www.thymeleaf.org"-->
+<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+<!--      layout:decorate="~{admin/index}">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Doctor</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div layout:fragment="content">-->
+<!--    <br>-->
+<!--    <div class="box">-->
+<!--        <div class="box-body">-->
+<!--            <h1 class="mb-4 text-center">Danh sách lịch hẹn</h1>-->
+
+<!--            &lt;!&ndash; Thông báo lỗi &ndash;&gt;-->
+<!--            <div class="alert alert-danger" th:if="${errorMessage}">-->
+<!--                <p th:text="${errorMessage}"></p>-->
+<!--            </div>-->
+
+<!--            &lt;!&ndash; Bảng danh sách bác sĩ &ndash;&gt;-->
+<!--            <form method="get" action="/admin/appointments" class="mb-4">-->
+<!--                <div class="row">-->
+<!--                    <div class="col-md-3">-->
+<!--                        <input type="text" name="doctorName" class="form-control" placeholder="Tên bác sĩ"-->
+<!--                               th:value="${param.doctorName}">-->
+<!--                    </div>-->
+<!--                    <div class="col-md-3">-->
+<!--                        <input type="text" name="patientName" class="form-control" placeholder="Tên bệnh nhân"-->
+<!--                               th:value="${param.patientName}">-->
+<!--                    </div>-->
+<!--                    <div class="col-md-3">-->
+<!--                        <input type="date" name="appointmentDate" class="form-control"-->
+<!--                               th:value="${param.appointmentDate}">-->
+<!--                    </div>-->
+<!--                    <div class="col-md-3">-->
+<!--                        <button type="submit" class="btn btn-primary">Tìm kiếm</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </form>-->
+
+<!--            <table class="table table-bordered">-->
+<!--                <thead>-->
+<!--                <tr>-->
+<!--                    <th>ID</th>-->
+<!--                    <th>Ngày hẹn</th>-->
+<!--                    <th>Thời gian</th>-->
+<!--                    <th>Bệnh nhân</th>-->
+<!--                    <th>Bác sĩ</th>-->
+<!--                    <th>Dịch vụ</th>-->
+<!--                    <th>Trạng thái</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody>-->
+<!--                <tr th:each="appointment : ${appointmentDetails}">-->
+<!--                    <td th:text="${appointment.id}"></td>-->
+<!--                    <td th:text="${appointment.appointmentDate}"></td>-->
+<!--                    <td th:text="${appointment.appointmentTime}"></td>-->
+<!--                    <td th:text="${appointment.patientName}"></td>-->
+<!--                    <td th:text="${appointment.doctorName}"></td>-->
+<!--                    <td>-->
+<!--                        <ul>-->
+<!--                            <li th:each="service : ${appointment.services}" th:text="${service}"></li>-->
+<!--                        </ul>-->
+<!--                    </td>-->
+<!--                    <td th:text="${appointment.status}"></td>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/index}">
+<head>
+    <meta charset="UTF-8">
+    <title>Lịch hẹn</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <br>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">DANH SÁCH LỊCH HẸN</h3>
+        </div>
+        <!-- Thông báo lỗi -->
+        <div class="alert alert-danger" th:if="${errorMessage}">
+            <p th:text="${errorMessage}"></p>
+        </div>
+
+        <!-- /.card-header -->
+        <div class="card-body">
+            <!-- Form tìm kiếm -->
+            <form method="get" action="/admin/appointments" class="mb-4">
+                <div class="row">
+                    <div class="col-md-3">
+                        <input type="text" name="doctorName" class="form-control" placeholder="Tên bác sĩ"
+                               th:value="${param.doctorName}">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" name="patientName" class="form-control" placeholder="Tên bệnh nhân"
+                               th:value="${param.patientName}">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" name="appointmentDate" class="form-control"
+                               th:value="${param.appointmentDate}">
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                    </div>
+                </div>
+            </form>
+
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Ngày hẹn</th>
+                                <th>Thời gian</th>
+                                <th>Bệnh nhân</th>
+                                <th>Bác sĩ</th>
+                                <th>Dịch vụ</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="appointment : ${appointmentDetails}">
+                                <td th:text="${appointment.id}"></td>
+                                <td th:text="${appointment.appointmentDate}"></td>
+                                <td th:text="${appointment.appointmentTime}"></td>
+                                <td th:text="${appointment.patientName}"></td>
+                                <td th:text="${appointment.doctorName}"></td>
+                                <td>
+                                    <ul>
+                                        <li th:each="service : ${appointment.services}" th:text="${service}"></li>
+                                    </ul>
+                                </td>
+                                <td th:text="${appointment.status}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

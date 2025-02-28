@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/index}">
+<head>
+    <meta charset="UTF-8">
+    <title>Specialization</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">DANH SÁCH CHUYÊN KHOA</h3>
+        </div>
+        <!-- Thông báo lỗi -->
+        <div class="alert alert-danger" th:if="${errorMessage}">
+            <p th:text="${errorMessage}"></p>
+        </div>
+
+        <div class="text-end w-auto mx-4 mt-2">
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="text" name="specializationName" class="form-control" placeholder="Tên chuyên khoa"
+                    >
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                </div>
+                <div class="col">
+                    <a class="btn btn-primary float-right" th:href="@{specializations/create}">Thêm chuyên khoa</a>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên Chuyên Khoa</th>
+                    <th>Trạng Thái</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="specialization : ${specializations}">
+                    <td th:text="${specialization.id}"></td>
+                    <td th:text="${specialization.name}"></td>
+                    <td th:text="${specialization.status ? 'Hoạt động' : 'Không hoạt động'}"></td>
+                    <td>
+                        <!-- Biểu tượng chỉnh sửa -->
+                        <a class="btn btn-warning btn-sm" th:href="@{specializations/update/{id}(id=${specialization.id})}">Chỉnh sửa</a>
+                        <!-- Biểu tượng xóa -->
+                        <a class="btn btn-danger btn-sm"
+                           th:if="${specialization.status == true}"
+                           onclick="return confirm('Bạn có chắc chắn muốn hủy?')"
+                           th:href="@{specializations/disable/{id}(id=${specialization.id})}">Hủy</a>
+
+                        <a class="btn btn-success btn-sm"
+                           th:if="${specialization.status == false}"
+                           onclick="return confirm('Bạn có chắc chắn muốn kích hoạt lại?')"
+                           th:href="@{specializations/enable/{id}(id=${specialization.id})}">Kích hoạt</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer clearfix">
+            <nav aria-label="Page navigation" class="d-flex justify-content-center">
+                <ul class="pagination">
+                    <!-- Nút Previous -->
+                    <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+                        <a class="page-link" th:href="@{/admin/specializations(page=${currentPage - 1}, size=${size})}">Previous</a>
+                    </li>
+
+                    <!-- Dấu ba chấm trước khi currentPage > 2 -->
+                    <li class="page-item" th:if="${currentPage > 3}">
+                        <span class="page-link">...</span>
+                    </li>
+
+                    <!-- Hiển thị các trang gần currentPage -->
+                    <li class="page-item" th:each="pageNum : ${#numbers.sequence(currentPage - 1, currentPage + 1)}"
+                        th:if="${pageNum >= 1 and pageNum <= totalPages}"
+                        th:classappend="${currentPage == pageNum} ? 'active'">
+                        <a class="page-link" th:href="@{/admin/specializations(page=${pageNum}, size=${size})}"
+                           th:text="${pageNum}"></a>
+                    </li>
+
+                    <!-- Dấu ba chấm sau nếu currentPage < totalPages - 2 -->
+                    <li class="page-item" th:if="${currentPage < totalPages - 2}">
+                        <span class="page-link">...</span>
+                    </li>
+
+                    <!-- Hiển thị các trang cuối -->
+                    <li class="page-item" th:if="${currentPage < totalPages - 3}">
+                        <a class="page-link" th:href="@{/admin/specializations(page=${totalPages}, size=${size})}"
+                           th:text="${totalPages}"></a>
+                    </li>
+
+                    <!-- Nút Next -->
+                    <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="@{/admin/specializations(page=${currentPage + 1}, size=${size})}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+</body>
+</html>

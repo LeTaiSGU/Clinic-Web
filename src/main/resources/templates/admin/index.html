@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style th:replace="admin/fragment/style"></style>
+</head>
+<!--<body class="hold-transition skin-blue sidebar-mini">-->
+<!-- Site wrapper -->
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+    <div th:replace="admin/fragment/header"></div>
+
+    <div th:replace="admin/fragment/left_side"></div>
+
+    <div class="content-wrapper">
+        <div layout:fragment="content" class="content py-3">
+            <p>
+                Trang chính
+            </p>
+        </div>
+    </div>
+
+    <div th:replace="admin/fragment/footer"></div>
+</div>
+
+<div th:replace="admin/fragment/script"></div>
+
+</body>
+</html>

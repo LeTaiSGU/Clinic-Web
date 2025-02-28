@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Minie Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=tune" />
+    <link rel="stylesheet" href="./../../../static/css/information/appointment.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=search" />
+    <th:block th:replace="layout :: link-css"></th:block>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700,900&display=swap');
+
+        body{
+            background: #ecf0f4;
+            width: 100%;
+            height: 100%;
+            font-size: 18px;
+            line-height: 1.5;
+            font-family: 'Roboto', sans-serif;
+            color: #222;
+        }
+        .container{
+            position: relative;
+            max-width: 1230px;
+            width: 100%;
+        }
+
+        h1{
+            font-weight: 700;
+            font-size: 45px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        span {
+            font-size: 24px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        h4{
+            font-weight: 700;
+            font-size: 24px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .form-group > label{
+            display: block;
+            font-size: 18px;
+            color: #000;
+        }
+
+        .form-control{
+            height: 50px;
+            background: #ecf0f4;
+            border-color: transparent;
+            padding: 0 15px;
+            font-size: 16px;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+        .form-control:focus{
+            border-color: #00bcd9;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
+        textarea.form-control{
+            height: 160px;
+            padding-top: 15px;
+            resize: none;
+        }
+
+        .btn{
+            padding: .657rem .75rem;
+            font-size: 18px;
+            letter-spacing: 0.050em;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #00bcd9;
+            border-color: #00bcd9;
+        }
+
+        .btn-primary:hover {
+            color: #00bcd9;
+            background-color: #ffffff;
+            border-color: #00bcd9;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
+
+        .btn-primary:focus, .btn-primary.focus {
+            color: #00bcd9;
+            background-color: #ffffff;
+            border-color: #00bcd9;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
+
+        .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
+        .show > .btn-primary.dropdown-toggle {
+            color: #00bcd9;
+            background-color: #ffffff;
+            border-color: #00bcd9;
+        }
+
+        .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
+        .show > .btn-primary.dropdown-toggle:focus {
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
+
+        #errorMessage {
+            position: absolute; /* Nổi lên trên, không ảnh hưởng layout */
+            top: 10px; /* Khoảng cách từ phía trên */
+            right: 20px; /* Khoảng cách từ phía phải */
+            z-index: 1000; /* Đảm bảo nó nổi trên các thành phần khác */
+            padding: 15px;
+            border: 1px solid red;
+            border-radius: 5px;
+            background-color: #f8d7da; /* Màu nền cảnh báo */
+            color: #721c24; /* Màu chữ cảnh báo */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Tạo bóng cho đẹp */
+
+            opacity: 0;
+            transform: translateY(-20px); /* Trượt lên trên */
+            transition: opacity 0.5s, transform 0.5s;
+        }
+    </style>
+</head>
+<body>
+<th:block th:replace="layout :: header"></th:block>
+
+
+
+<div class="container mt-5">
+    <div class="row p-4">
+        <div class="col-1 col-md-3">
+            <div class="bg-white shadow-sm rounded-2 ">
+                <ul class="nav flex-column pt-3 pb-3">
+                    <li class="p-3">
+                        <a th:href="@{/information/appointment}" class="link-underline link-underline-opacity-0 text-dark w-100 item-active d-block w-100">Lịch khám</a>
+                    </li>
+                    <li class="p-3">
+                        <a th:href="@{/information/history/{patientId}(patientId=${user.patient.id})}" class="link-underline link-underline-opacity-0 text-dark d-block w-100">Lịch sử thanh toán</a>
+                    </li>
+                    <li class="p-3">
+                        <a th:href="@{/information/userProfile/{patientId}(patientId=${user.patient.id})}" class="link-underline link-underline-opacity-0 text-dark d-block w-100">Hồ sơ</a>
+                    </li>
+                    <li class="p-3" >
+                        <a th:href="@{/information/account/{patientId}(patientId=${user.patient.id})}" class="link-underline link-underline-opacity-0 text-dark d-block w-100">Tài khoản</a>
+                    </li>
+                    <li class="p-3">
+                        <a href="/logout" class="link-underline link-underline-opacity-0 text-dark d-block w-100">Đăng xuất</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-span-9 col-md-9">
+            <div class="d-flex items-center justify-content-between align-items-center">
+                <h1 class="text-xl">Lịch khám</h1>
+            </div>
+            <div class="d-flex items-center justify-content-between">
+                <div class="bg-white d-flex flex-column col-7 shadow-sm rounded-2" >
+                    <div class="p-4">
+                        <!-- Form tìm kiếm -->
+                        <form method="get" th:action="@{/information/appointment/search}">
+                            <div class="d-flex">
+                                <input
+                                        name="keyword"
+                                        placeholder="Tìm kiếm bằng dịch vụ, trạng thái..."
+                                        class="form-control w-100"
+                                        th:value="${keyword}"
+                                        type="text"
+                                >
+                                <button class="btn btn-primary" type="submit">
+                                    <span class="material-symbols-outlined">
+                                        search
+                                    </span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="ant-spin-container ng-star-inserted">
+                        <div th:if="${#lists.isEmpty(appointments)}">
+                            <!-- Nếu không có dữ liệu -->
+                            <div class="ant-empty-image d-flex align-items-center justify-content-center">
+                                <img class="" src="./../../../static/image/information/empty.svg" alt="Không có dữ liệu">
+                            </div>
+                            <p class="ant-empty-description ng-star-inserted text-center"> Lịch khám của bạn trống !</p>
+                        </div>
+
+                        <div th:unless="${#lists.isEmpty(appointments)}">
+                            <!-- Nếu có dữ liệu -->
+                            <table class="table table-striped">
+                                <thead class="thead-custom">
+                                <tr>
+                                    <th>Mã</th>
+                                    <th>Dịch vụ</th>
+                                    <th>Giờ khám</th>
+                                    <th>Ngày khám</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <!--<tr th:each="appointment : ${appointments}" class="appointment-row"
+                                    th:data-id="${appointment.id}"
+                                    th:data-date="${appointment.appointmentDate}"
+                                    th:data-status="${appointment.status}"
+                                    th:data-doctor="${appointment.doctor != null ? appointment.doctor.fullName : 'Không có bác sĩ'}"
+                                    th:data-time="${appointment.appointmentTime}"
+                                >
+                                    <td>
+                                        <a th:text="${appointment.id}" class="appointment-id"
+                                           href="javascript:void(0);"
+                                           onclick="showDetails(this)">
+                                            ID
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <div th:each="appointmentService : ${appointment.appointmentServices}">
+                                            <span th:text="${appointmentService.service.serviceName}"></span>
+                                        </div>
+                                    </td>
+                                    <td th:text="${appointment.appointmentDate}">Ngày khám</td>
+                                    <td th:text="${appointment.status}">Trạng thái</td>
+                                </tr>-->
+                                <tr th:each="appointment : ${appointments}" class="appointment-row"
+                                    th:data-id="${appointment.id}"
+                                    th:data-date="${appointment.appointmentDate}"
+                                    th:data-status="${appointment.status}"
+                                    th:data-doctor="${appointment.doctor != null ? appointment.doctor.fullName : 'Không có bác sĩ'}"
+                                    th:data-time="${appointment.appointmentTime}"
+                                >
+                                    <td>
+                                        <a th:text="${appointment.id}" class="appointment-id" href="javascript:void(0);" onclick="showDetails(this)">ID</a>
+                                    </td>
+                                    <td>
+                                        <ul>
+                                            <li th:each="service : ${appointmentServicesMap[appointment.id]}" th:text="${service.services.serviceName}"></li>
+                                        </ul>
+                                    </td>
+                                    <!--<td>
+                                        <div th:each="appointmentService : ${appointment.appointmentServices}">
+                                            <span th:text="${appointmentService.service.serviceName}"></span>
+                                        </div>
+                                    </td>-->
+                                    <td th:text="${appointment.appointmentTime}">Giờ khám</td>
+                                    <td th:text="${appointment.appointmentDate}">Ngày khám</td>
+                                    <td th:text="${appointment.status}">Trạng thái</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white d-flex flex-column col-7 justify-content-center shadow-sm rounded-2">
+                    <div class="p-4">
+                        <!-- Nếu không có dữ liệu -->
+                        <div id="emptyMessage">
+                            <div class="ant-empty-image d-flex align-items-center justify-content-center">
+                                <img src="./../../../static/image/information/empty.jpg" alt="Không có dữ liệu">
+                            </div>
+                            <p class="ant-empty-description ng-star-inserted text-center"> Lịch khám của bạn trống !</p>
+
+
+                        </div>
+                        <!--Nếu có dữ liệu-->
+                        <form id="appointmentDetailForm" style="display: none;" method="post" th:action="@{/information/appointment/cancel}">
+
+                            <input type="text" class="form-control d-none" id="detailIdDelete" name="id" readonly>
+                            <div class="p-3">
+                                <h4>Thông tin lịch khám</h4>
+                                <div class="d-flex justify-content-between mt-3 fs-5 ">
+                                    <span>ID</span>
+                                    <span id="detailId">Đức Toàn</span>
+                                </div>
+                                <div class="d-flex justify-content-between mt-3 fs-5 ">
+                                    <span>Doctor name</span>
+                                    <span id="detailDoctor">Đức Toàn</span>
+                                </div>
+                                <div class="d-flex justify-content-between mt-3 fs-5">
+                                    <span>Service name</span>
+                                    <span id="detailService">Đức Toàn</span>
+                                </div>
+                                <div class="d-flex justify-content-between mt-3 fs-5">
+                                    <span>Date</span>
+                                    <span id="detaiDate">Đức Toàn</span>
+                                </div>
+                                <div class="d-flex justify-content-between mt-3 fs-5">
+                                    <span>Time</span>
+                                    <span id="detaiTime">Đức Toàn</span>
+                                </div>
+                                <div class="d-flex justify-content-between mt-3 fs-5">
+                                    <span>Status</span>
+                                    <span id="detailStatus">Đức Toàn</span>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-danger" id="btn-cancel">
+                                    Hủy lịch
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:replace="layout :: footer"></th:block>
+<th:block th:replace="layout :: script"></th:block>
+
+<!--<script src="./../../../static/js/appointments.js"></script>-->
+<script>
+    function showDetails(element) {
+
+        document.getElementById('emptyMessage').style.display = 'none';
+        document.getElementById('appointmentDetailForm').style.display = 'block';
+        // Lấy hàng (tr) chứa link (a) vừa được click
+        const row = element.closest('tr');
+
+        // Lấy dữ liệu từ các thuộc tính data-* của hàng
+        const appointmentId = row.getAttribute('data-id');
+        const appointmentDate = row.getAttribute('data-date');
+        const appointmentTime = row.getAttribute('data-time');
+        const doctorName = row.getAttribute('data-doctor');
+        const status = row.getAttribute('data-status');
+
+        // Lấy danh sách dịch vụ liên quan
+        const services = row.querySelectorAll('td ul li');
+        let serviceNames = [];
+        services.forEach(service => {
+            serviceNames.push(service.textContent);  // Lấy tên dịch vụ
+        });
+        const serviceName = serviceNames.join(', ');  // Nối các dịch vụ bằng dấu phẩy
+
+        //Id để xóa dữ liệu
+        document.getElementById('detailIdDelete').value = appointmentId;
+
+
+        // Điền dữ liệu vào form chi tiết
+        document.getElementById('detailId').innerHTML = "" + appointmentId;
+        document.getElementById('detaiDate').innerHTML ="" +  appointmentDate;
+        document.getElementById('detaiTime').innerHTML ="" + appointmentTime;
+        document.getElementById('detailDoctor').innerHTML ="" + doctorName;
+        document.getElementById('detailStatus').innerHTML ="" + status;
+        document.getElementById('detailService').innerHTML ="" + serviceName;
+
+        var btnCancel = document.getElementById('btn-cancel')
+
+        if(status == 0) {
+            btnCancel.classList.remove("btn-danger");
+            btnCancel.classList.add("btn-secondary");
+            btnCancel.disabled = true;
+        }
+    }
+</script>
+</body>
+</html>

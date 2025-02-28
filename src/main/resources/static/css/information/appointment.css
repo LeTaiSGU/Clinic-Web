@@ -1,0 +1,8 @@
+.thead-custom > tr {
+    text-align: center;
+    padding-left: 20px;
+}
+
+.thead-custom > tr > th {
+    font-size: 14px;
+}

@@ -1,0 +1,58 @@
+.btn-option{
+    display: inline-block;
+    font-weight: 400;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border: 1.5px solid #D1D5DB;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+
+}
+
+.btn-option:hover {
+    border-color: #007BFF;
+}
+
+.font-weight-600{
+    font-weight: 600 !important;
+}
+
+.right-content {
+    flex: 0 0 300px; /* Đặt width cố định cho right content */
+    position: sticky;
+    top: 20px; /* Khoảng cách từ phần trên cùng của viewport */
+    align-self: flex-start; /* Để right content không kéo dài theo left content */
+    height: fit-content !important;
+}
+
+.left-content {
+    flex: 1;
+    height: fit-content !important;
+}
+
+.selected {
+    background-color: #007bff;
+    color: #fff;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+
+}
+
+.option.selected {
+    background-color: #007BFF;
+    color: white;
+    border-color: #0056b3;
+}
+.option {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}

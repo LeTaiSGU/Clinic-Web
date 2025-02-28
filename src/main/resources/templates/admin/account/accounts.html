@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/index}">
+<head>
+    <meta charset="UTF-8">
+    <title>Account</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">DANH SÁCH TÀI KHOẢN</h3>
+        </div>
+        <div class="text-end w-auto mx-4 mt-2">
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="text" name="username" class="form-control" placeholder="Username"
+                    >
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                </div>
+                <div class="col">
+                    <a class="btn btn-primary float-right" th:href="@{/admin/accounts/new}">Tạo tài khoản cho bác sĩ</a>
+                </div>
+            </div>
+        </div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Doctor</th>
+                <th>Patient</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Kiểm tra nếu userResponse không rỗng -->
+            <tr th:if="${#lists.isEmpty(userResponse)}">
+                <td colspan="6" class="text-center">Không có tài khoản nào.</td>
+            </tr>
+
+            <tr th:each="user : ${userResponse}">
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.username}"></td>
+                <td th:text="${user.password}"></td>
+                <td th:text="${user.doctor != null ? user.doctor.fullName : '--'}"></td>
+                <td th:text="${user.patient != null ? user.patient.fullName : '--'}"></td>
+                <td th:text="${user.status}"></td>
+                <td>
+                    <form th:action="@{/admin/accounts/disable/{id}(id=${user.id})}" method="post" th:if="${user.status}" onsubmit="return confirm('Bạn có chắc chắn muốn hủy?')">
+                        <button type="submit" class="btn btn-danger btn-sm">Hủy</button>
+                    </form>
+
+                    <!-- Enable Form -->
+                    <form th:action="@{/admin/accounts/enable/{id}(id=${user.id})}" method="post" th:if="${not user.status}" onsubmit="return confirm('Bạn có chắc chắn muốn kích hoạt lại?')">
+                        <button type="submit" class="btn btn-success btn-sm">Kích hoạt</button>
+                    </form>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <div class="card-footer clearfix">
+            <nav aria-label="Page navigation" class="d-flex justify-content-center">
+                <ul class="pagination">
+                    <!-- Nút Previous -->
+                    <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+                        <a class="page-link" th:href="@{/admin/accounts(page=${currentPage - 1}, size=${size})}">Previous</a>
+                    </li>
+
+                    <!-- Dấu ba chấm trước khi currentPage > 2 -->
+                    <li class="page-item" th:if="${currentPage > 3}">
+                        <span class="page-link">...</span>
+                    </li>
+
+                    <!-- Hiển thị các trang gần currentPage -->
+                    <li class="page-item" th:each="pageNum : ${#numbers.sequence(currentPage - 1, currentPage + 1)}"
+                        th:if="${pageNum >= 1 and pageNum <= totalPages}"
+                        th:classappend="${currentPage == pageNum} ? 'active'">
+                        <a class="page-link" th:href="@{/admin/accounts(page=${pageNum}, size=${size})}"
+                           th:text="${pageNum}"></a>
+                    </li>
+
+                    <!-- Dấu ba chấm sau nếu currentPage < totalPages - 2 -->
+                    <li class="page-item" th:if="${currentPage < totalPages - 2}">
+                        <span class="page-link">...</span>
+                    </li>
+
+                    <!-- Hiển thị các trang cuối -->
+                    <li class="page-item" th:if="${currentPage < totalPages - 3}">
+                        <a class="page-link" th:href="@{/admin/accounts(page=${totalPages}, size=${size})}"
+                           th:text="${totalPages}"></a>
+                    </li>
+
+                    <!-- Nút Next -->
+                    <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="@{/admin/accounts(page=${currentPage + 1}, size=${size})}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    </div>
+</div>
+</body>
+
+</html>

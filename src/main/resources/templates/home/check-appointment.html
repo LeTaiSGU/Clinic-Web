@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiểm tra lịch hẹn</title>
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Thêm CSS nếu cần -->
+    <th:block th:replace="layout :: link-css"></th:block>
+
+</head>
+<body>
+<th:block th:replace="layout :: header"></th:block>
+
+<div class="container text-center">
+    <div class="bg-white p-4" style="margin-top: 30px; border-radius: 20px">
+    <h1 class="">Kiểm tra Lịch Hẹn</h1>
+    <form method="post" action="/check-appointment" class="mt-4">
+        <input type="text" name="appointmentCode" class="form-control text-center" placeholder="Nhập mã lịch hẹn" required>
+        <button type="submit" class="btn btn-primary mt-3">Tìm kiếm</button>
+    </form>
+    </div>
+
+    <!-- Thông báo lỗi -->
+    <div class="alert alert-danger mt-4" th:if="${errorMessage}">
+        <p th:text="${errorMessage}"></p>
+    </div>
+
+    <!-- Hiển thị thông tin lịch hẹn -->
+    <div class="bg-white p-3 mt-4" th:if="${appointmentDetails}" style="border-radius: 20px">
+        <h2>Thông tin Lịch Hẹn</h2>
+        <table class="table table-bordered mt-3">
+            <tbody>
+            <tr>
+                <th>ID</th>
+                <td th:text="${appointmentDetails.id}"></td>
+            </tr>
+            <tr>
+                <th>Ngày hẹn</th>
+                <td th:text="${appointmentDetails.appointmentDate}"></td>
+            </tr>
+            <tr>
+                <th>Thời gian</th>
+                <td th:text="${appointmentDetails.appointmentTime}"></td>
+            </tr>
+            <tr>
+                <th>Bệnh nhân</th>
+                <td th:text="${appointmentDetails.patientName}"></td>
+            </tr>
+            <tr>
+                <th>Bác sĩ</th>
+                <td th:text="${appointmentDetails.doctorName}"></td>
+            </tr>
+            <tr>
+                <th>Dịch vụ</th>
+                <td>
+                    <ul>
+                        <li th:each="service : ${appointmentDetails.services}" th:text="${service}"></li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>Trạng thái</th>
+                <td th:text="${appointmentDetails.status}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<th:block th:replace="layout :: footer"></th:block>
+
+</body>
+</html>

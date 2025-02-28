@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/index}">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">DANH SÁCH BÁC SĨ</h3>
+        </div>
+        <!-- Thông báo lỗi -->
+        <div class="alert alert-danger" th:if="${errorMessage}">
+            <p th:text="${errorMessage}"></p>
+        </div>
+
+        <div class="text-end w-auto mx-4 mt-2">
+            <!--        <form method="get" action="" class="mb-4">-->
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="text" name="doctorName" class="form-control" placeholder="Tên bác sĩ"
+                    >
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                </div>
+                <div class="col">
+                    <a class="btn btn-primary float-right " th:href="@{doctors/create}">Thêm bác sĩ</a>
+                </div>
+            </div>
+            <!--        </form>-->
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Full Name</th>
+                    <th>Gender</th>
+                    <th>Specialization</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="doctor : ${doctors}">
+                    <td th:text="${doctor.id}"></td>
+                    <td th:text="${doctor.fullName}"></td>
+                    <td th:text="${doctor.gender == true ? 'Nữ' : 'Nam'}"></td>
+                    <td th:text="${doctor.specialization.name}"></td>
+                    <td th:text="${doctor.email}"></td>
+                    <td th:text="${doctor.phone}"></td>
+                    <td th:text="${doctor.status ? 'Hoạt động' : 'Không hoạt động'}"></td> <!-- Cột status -->
+                    <td>
+                        <!-- Biểu tượng chỉnh sửa -->
+                        <a class="btn btn-warning btn-sm" th:href="@{doctors/update/{id}(id=${doctor.id})}">Chỉnh
+                            sửa</a>
+                        <!-- Biểu tượng xóa -->
+                        <a class="btn btn-danger btn-sm"
+                           th:if="${doctor.status == true}"
+                           onclick="return confirm('Bạn có chắc chắn muốn hủy?')"
+                           th:href="@{doctors/disable/{id}(id=${doctor.id})}">Hủy</a>
+
+                        <a class="btn btn-success btn-sm"
+                           th:if="${doctor.status == false}"
+                           onclick="return confirm('Bạn có chắc chắn muốn kích hoạt lại?')"
+                           th:href="@{doctors/enable/{id}(id=${doctor.id})}">Kích hoạt</a>
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer clearfix">
+            <nav aria-label="Page navigation" class="d-flex justify-content-center">
+                <ul class="pagination">
+                    <!-- Nút Previous -->
+                    <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+                        <a class="page-link" th:href="@{/admin/doctors(page=${currentPage - 1}, size=${size})}">Previous</a>
+                    </li>
+
+                    <!-- Dấu ba chấm trước khi currentPage > 2 -->
+                    <li class="page-item" th:if="${currentPage > 3}">
+                        <span class="page-link">...</span>
+                    </li>
+
+                    <!-- Hiển thị các trang gần currentPage -->
+                    <li class="page-item" th:each="pageNum : ${#numbers.sequence(currentPage - 1, currentPage + 1)}"
+                        th:if="${pageNum >= 1 and pageNum <= totalPages}"
+                        th:classappend="${currentPage == pageNum} ? 'active'">
+                        <a class="page-link" th:href="@{/admin/doctors(page=${pageNum}, size=${size})}"
+                           th:text="${pageNum}"></a>
+                    </li>
+
+                    <!-- Dấu ba chấm sau nếu currentPage < totalPages - 2 -->
+                    <li class="page-item" th:if="${currentPage < totalPages - 2}">
+                        <span class="page-link">...</span>
+                    </li>
+
+                    <!-- Hiển thị các trang cuối -->
+                    <li class="page-item" th:if="${currentPage < totalPages - 3}">
+                        <a class="page-link" th:href="@{/admin/doctors(page=${totalPages}, size=${size})}"
+                           th:text="${totalPages}"></a>
+                    </li>
+
+                    <!-- Nút Next -->
+                    <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="@{/admin/doctors(page=${currentPage + 1}, size=${size})}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+</body>
+</html>

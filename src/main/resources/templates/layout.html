@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>Phòng khám tư nhân</title>
+    <th:block th:fragment="link-css">
+        <link rel="icon" href="/pictures/logo/logo.ico" type="image/png">
+<!--        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">-->
+        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<!--        <link rel="stylesheet" th:href="@{/css/snackbar.min.css}">-->
+        <style>
+            html,
+            body {
+                height: 100%;
+                width: 100%;
+                background-color: #f3f4f6;
+                color: black;
+            }
+
+            .container {
+                min-height: 100%;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .content {
+                flex: 1;
+            }
+
+            footer {
+                flex-shrink: 0;
+            }
+
+            .map-container iframe {
+                width: 50%;
+                height: 200px;
+                border-radius: 10px;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                transition: transform 0.3s ease;
+                margin: 0 auto;
+            }
+
+            .map-container iframe:hover {
+                transform: scale(1.02);
+            }
+
+            @media (max-width: 768px) {
+                .map-container iframe {
+                    height: 250px;
+                }
+            }
+        </style>
+    </th:block>
+</head>
+<body>
+<!-- Header -->
+<header>
+    <nav class="navbar navbar-expand-md navbar-light sticky-top bg-white text-dark">
+        <div class="container-fluid text-dark">
+            <a class="navbar-brand" href="/">
+                <img th:src="@{/images/logobv.jpg}" style="width: 150px; height: 80px">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <a class="nav-link font-weight-bold " aria-current="page" href="/">TRANG CHỦ</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link font-weight-bolder " aria-current="page" href="/booking">ĐẶT LỊCH</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link font-weight-bolder " aria-current="page" href="/check-appointment">KIỂM TRA LỊCH</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link font-weight-bolder " aria-current="page" href="/about">GIỚI THIỆU</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link font-weight-bolder " aria-current="page" sec:authorize="isAuthenticated()" th:href="@{information/appointment}">THÔNG TIN CÁ NHÂN</a>
+                    </li>
+
+                </ul>
+                <a class="d-flex gap-2 text-decoration-none" href="/login" sec:authorize="!isAuthenticated()">
+                <button class="btn btn-lg btn-info" style="background-color: #9EDAE4 !important;">Đăng nhập</button>
+                </a>
+
+                <div class="nav-item me-2" sec:authorize="isAuthenticated()">
+                    <form th:action="@{/logout}" method="post">
+                        <button class="btn btn-danger btn-lg" type="submit">Đăng xuất</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="container" >
+    <div style="margin-top: 135px !important;">
+    <div class="content" >
+        <!-- Page content goes here -->
+        <div></div>
+    </div>
+    </div>
+    <!-- Footer -->
+     <footer th:fragment="footer" class="py-4 text-center row w-100 mt-3" style="background-color: #e3f2fd;">
+<!--    <footer th:fragment="footer" class="bg-primary py-3 text-center row">-->
+        <div class="col d-grid map-container">
+            <h4><strong>Liên Hệ</strong></h4>
+                <p class="text-black"><i class="bi bi-geo-alt-fill"></i>273 An Dương Vương, Phường 3, Quận 5, Thành phố Hồ Chí Minh</p>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.669726976759!2d106.67967801136082!3d10.759917089343645!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f1b7c3ed289%3A0xa06651894598e488!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBTw6BpIEfDsm4!5e0!3m2!1svi!2s!4v1733488988040!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <div class="col d-grid">
+            <h4><strong>Phòng Khám Răng</strong></h4>
+            <img th:src="@{/images/logo.png}">
+            <p class="text-black">
+                Cảm ơn bạn đã tin tưởng và lựa chọn dịch vụ nha khoa của chúng tôi.
+                <br/>Chúng tôi cam kết mang lại sự chăm sóc tốt nhất để bạn luôn tự tin với nụ cười của mình!
+            </p>
+        </div>
+        <div class="col d-grid">
+            <h4><strong>Liên Kết Nhanh</strong></h4>
+            <a class="nav-link text-black" href="/services">Dịch Vụ</a>
+            <a class="nav-link text-black" href="/promotions">Ưu Đãi</a>
+            <a class="nav-link text-black" href="/team">Đội Ngũ Bác Sĩ</a>
+            <a class="nav-link text-black" href="/contact">Liên Hệ</a>
+        </div>
+    </footer>
+</div>
+
+<!-- Scripts -->
+<th:block th:fragment="script">
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/jquery-3.7.0.min.js"></script>
+    <script src="/js/snackbar.min.js"></script>
+    <script src="/js/cart.js"></script>
+</th:block>
+</body>
+</html>
